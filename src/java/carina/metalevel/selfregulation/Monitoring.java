@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package carina.metacore;
+package carina.metalevel.selfregulation;
 
 /**
  *
  * @author jalheart
  */
-abstract public class CognitiveFunction extends Element{
-   public abstract Object processInformation(Object value);   
-}
+public class Monitoring {   }

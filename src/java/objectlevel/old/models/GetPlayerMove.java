@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package carina.metacore;
+package objectlevel.old.models;
+
+import objectlevel.old.perception.Perception;
 
 /**
  *
  * @author jalheart
  */
-abstract public class CognitiveFunction extends Element{
-   public abstract Object processInformation(Object value);   
+public class GetPlayerMove extends Perception{
+    public GetPlayerMove(int[] value){
+        this.processInformation(value);
+    }
 }

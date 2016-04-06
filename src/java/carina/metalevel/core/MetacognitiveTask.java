@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package carina.metacore;
+package carina.metalevel.core;
+import carina.metacore.Task;
 
 /**
  *
  * @author jalheart
  */
-abstract public class CognitiveFunction extends Element{
-   public abstract Object processInformation(Object value);   
+abstract public class MetacognitiveTask extends Task{    
 }

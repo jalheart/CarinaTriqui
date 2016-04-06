@@ -9,6 +9,5 @@ package carina.metacore;
  *
  * @author jalheart
  */
-abstract public class CognitiveFunction extends Element{
-   public abstract Object processInformation(Object value);   
+abstract public class ComputationalStrategy extends Strategy{   
 }

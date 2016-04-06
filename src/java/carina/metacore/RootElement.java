@@ -1,6 +1,8 @@
 package carina.metacore;
 abstract public class RootElement {
     private String name;
+    private Object output;
+    // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**
      * @return the name
      */
@@ -14,4 +16,19 @@ abstract public class RootElement {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * @return the output
+     */
+    public Object getOutput() {
+        return output;
+    }
+
+    /**
+     * @param output the output to set
+     */
+    public void setOutput(Object output) {
+        this.output = output;
+    }
+    // </editor-fold>
 }

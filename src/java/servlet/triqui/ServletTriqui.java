@@ -5,17 +5,17 @@
  */
 package servlet.triqui;
 
-import carina.metalevel.metamemory.working.WorkingMemory;
-import objectlevel.perception.Input;
+import carina.memory.WorkingMemory;
+import objectlevel.old.perception.Input;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import objectlevel.Agent;
-import objectlevel.models.SessionModel;
-import objectlevel.actuators.ViewBoardActuator;
+import objectlevel.old.Agent;
+import objectlevel.old.models.SessionModel;
+import objectlevel.old.actuators.ViewBoardActuator;
 
 /**
  *

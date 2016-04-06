@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package carina.metacore;
+package carina.objectlevel;
+
+import carina.metacore.Sensor;
 
 /**
  *
  * @author jalheart
  */
-abstract public class CognitiveFunction extends Element{
-   public abstract Object processInformation(Object value);   
+public class MouseSensor extends Sensor{
+    public MouseSensor() {
+        this.setType("mouse");
+    }
 }
