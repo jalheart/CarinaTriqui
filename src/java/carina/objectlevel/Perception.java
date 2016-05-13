@@ -5,6 +5,7 @@
  */
 package carina.objectlevel;
 
+import carina.memory.WorkingMemory;
 import carina.metacore.CognitiveFunction;
 import java.util.Map;
 
@@ -36,8 +37,10 @@ public class Perception extends CognitiveFunction{
         return null;
     }
     public void processInformation(Map<String,Object> value) {
-        BasicCognitiveProcessingUnit bcpu   =new BasicCognitiveProcessingUnit();
+        BasicCognitiveProcessingUnit bcpu   =WorkingMemory.getInstance().getBcpu();
         bcpu.addInput(value.get("information"), (String)value.get("type_sensor"));
         this.setPerception(bcpu);
-    }
+        WorkingMemory.getInstance().updateMentalState("is_perceived", Boolean.TRUE);
+        WorkingMemory.getInstance().setBcpu(bcpu);
+    }    
 }

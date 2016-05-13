@@ -5,9 +5,12 @@
  */
 package carina.objectlevel;
 
+import carina.metacore.Plan;
 import carina.metacore.RootElement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -17,6 +20,7 @@ public class BasicCognitiveProcessingUnit extends RootElement{
     private Input input;
     private Pattern pattern;
     private List<Category> categorys;
+    private Map<String,Plan>    _plans;
     public void addInput(Object information,String typeSensor){
         Input newInput  =new Input();
         newInput.setInformation(information);
@@ -29,6 +33,7 @@ public class BasicCognitiveProcessingUnit extends RootElement{
         this.setPattern(newPattern);
     }
     public void addCategories(List<Object>categories){
+        if(categories!=null){
             List<Category> categorysTemp = new ArrayList<>();
             Category newCategory;
             for (Object category : categories) {
@@ -36,7 +41,11 @@ public class BasicCognitiveProcessingUnit extends RootElement{
                 newCategory.setCategory(category);
                 categorysTemp.add(newCategory);
             }
-            this.setCategorys(categorysTemp);            
+            this.setCategorys(categorysTemp);
+        }
+    }
+    public void addPlans(Map<String,Plan> plans){
+        _plans  =plans;
     }
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**
@@ -79,6 +88,9 @@ public class BasicCognitiveProcessingUnit extends RootElement{
      */
     public void setCategorys(List<Category> categorys) {
         this.categorys = categorys;
+    }
+    public Map<String,Plan> getPlans(){
+        return _plans;
     }
     // </editor-fold>
 }

@@ -6,7 +6,6 @@
 package carina.metalevel.old.metamemory;
 
 import carina.memory.Memory;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -5,11 +5,13 @@
  */
 package carina.memory;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jalheart
  */
-public class MemoryInformation {
+public class MemoryInformation implements Serializable{
     public String cue;
     public Object information;
 
@@ -17,5 +19,4 @@ public class MemoryInformation {
         this.cue    =cue;
         this.information=information;
     }
-    
 }

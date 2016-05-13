@@ -13,6 +13,13 @@ import carina.metacore.RootElement;
  */
 public class Category extends RootElement{
     private Object category;
+    public Category() {
+        this(null);
+    }
+    public Category(Object category) {
+        this.category = category;
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**
      * @return the category

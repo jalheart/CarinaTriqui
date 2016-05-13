@@ -13,6 +13,9 @@ abstract public class Memory{
     public Memory(MemoryDriver driver){
         this._driver    =driver;
     }
+    /**
+     * @param information type MemoryInformation
+     */
     public void storeInformation(MemoryInformation information){
         this.getDriver().storeInformation(information);
     }

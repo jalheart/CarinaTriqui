@@ -14,6 +14,15 @@ import carina.metacore.RootElement;
 public class Input extends RootElement{
     private Object information;
     private String type;
+    
+    public Input() {
+        this(null,null);
+    }
+    public Input(Object information, String type) {
+        this.information = information;
+        this.type = type;
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**
      * @return the information

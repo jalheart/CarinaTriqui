@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import objectlevel.Karina;
 import objectlevel.old.Agent;
 import objectlevel.old.models.SessionModel;
 import objectlevel.old.actuators.ViewBoardActuator;
@@ -21,8 +22,7 @@ import objectlevel.old.actuators.ViewBoardActuator;
  *
  * @author jalheart
  */
-public class ServletTriqui extends HttpServlet {
-    private Input entradaCarina;
+public class ServletTriqui extends HttpServlet {    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,10 +34,11 @@ public class ServletTriqui extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {                        
-            Agent    agent  =new Agent(request.getParameterMap(),request.getSession(true),out);
-            agent.run();
-            out.print(WorkingMemory.getInstance().remember("moves_made"));
+        try (PrintWriter out = response.getWriter()) {
+            Karina karina=new Karina(request.getSession(true),out,request.getParameterMap());
+//            Agent    agent  =new Agent(request.getParameterMap(),request.getSession(true),out);
+//            agent.run();
+//            out.print(WorkingMemory.getInstance().remember("moves_made"));
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package carina.objectlevel;
 
+import carina.memory.WorkingMemory;
 import carina.metacore.Strategy;
 import java.util.List;
 
@@ -17,7 +18,7 @@ abstract public class ReasoningTask extends CognitiveTask{
     @Override
     public void buildProfile(){
         
-    }
+    }    
     // <editor-fold defaultstate="collapsed" desc="SETs y GETs">
     /**
      * @return the strategys

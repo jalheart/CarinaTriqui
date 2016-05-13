@@ -8,20 +8,24 @@ package carina.memory;
 import carina.metacore.Profile;
 import carina.metacore.State;
 import carina.objectlevel.BasicCognitiveProcessingUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import objectlevel.old.models.ModelOfTheWorld;
+import java.util.Map;
+import objectlevel.models.ModelOfTheWorld;
 
 
 /**
  *
  * @author jalheart
  */
-public class WorkingMemory extends Memory{        
+public class WorkingMemory extends Memory{
+    private static WorkingMemory instance;
     private BasicCognitiveProcessingUnit bcpu;
     private ModelOfTheWorld model_of_the_world;
     private List<Profile>   profiles;
-    private List<State>     mental_state;
-    public WorkingMemory(MemoryDriver driver) {
+    private Map<String,State>     mental_state;    
+    private WorkingMemory(MemoryDriver driver) {
         super(driver);
         MemoryInformation memoryTmp  =this.getDriver().retrieveInformation("bcpu");
         if(memoryTmp!=null){
@@ -40,19 +44,24 @@ public class WorkingMemory extends Memory{
             }
         }
         
+        this.mental_state   =new HashMap<>();
         memoryTmp  =this.getDriver().retrieveInformation("mental_state");
         if(memoryTmp!=null){
-            for (State state : (List<State>) memoryTmp.information) {
-                this.setMental_state(state);
+            for (Map.Entry<String, State> entry : mental_state.entrySet()) {
+                this.setMental_state(entry.getValue());
             }
         }
     }    
-    
+    public static void init(MemoryDriver driver){
+        if(instance==null){
+            instance   =new WorkingMemory(driver);
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**
      * @return the bcpu
      */
-    public Object getBcpu() {
+    public BasicCognitiveProcessingUnit getBcpu() {
         return bcpu;
     }
 
@@ -102,21 +111,45 @@ public class WorkingMemory extends Memory{
     /**
      * @return the mental_state
      */
-    public List<State> getMental_state() {
+    public Map<String,State> getMental_states() {
         return mental_state;
     }
-
+    public State getMental_state(String state) {
+        return mental_state.get(state);
+    }
+    public void updateMentalState(String name,Boolean value){
+        State state =this.mental_state.get(name);
+        state.setValue(value);
+        this.setMental_state(state);
+    }
     /**
      * @param mental_state the mental_state to set
      */
     public void setMental_state(State mental_state) {
         this.setMental_state(mental_state, Boolean.FALSE);
     }
-    public void setMental_state(State mental_state,Boolean s) {
-        this.mental_state.add(mental_state);
+    public void setMental_state(State mentalState,Boolean s) {
+//        boolean encontrado=false;
+//        for (State state: this.mental_state) {
+//            if(state.getName().equals(mental_state.getName())){            
+//                state.setValue(mental_state.getValue());
+//                encontrado=true;
+//                break;
+//            }
+//        }
+//        if(!encontrado)
+//            this.mental_state.add(mental_state);
+        this.mental_state.put(mentalState.getName(), mentalState);
         if(!s){
             this.getDriver().storeInformation(new MemoryInformation("mental_state", this.mental_state));
         }
+    }
+    /**
+     * Accesor para singleton
+     * @return WorkingMemory
+     */
+    public static WorkingMemory getInstance(){
+        return instance;
     }
     // </editor-fold>
     

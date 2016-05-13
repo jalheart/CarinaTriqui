@@ -27,7 +27,7 @@ public class MemoryDriverFile extends MemoryDriver{
     public MemoryDriverFile(String type){
         super(type);
         this.URL  ="./memory/"+type+".mem";
-        this.createFile(type);
+        this.createFile();
     }
     @Override
     public void storeInformation(MemoryInformation information) {
@@ -52,7 +52,7 @@ public class MemoryDriverFile extends MemoryDriver{
         data.remove(cue);
         this.saveFileData(data);
     }
-    private void createFile(String type){        
+    private void createFile(){
         try {
             File f=new File(this.URL);
             if(!f.exists()){
@@ -81,18 +81,24 @@ public class MemoryDriverFile extends MemoryDriver{
     private Map<String,MemoryInformation> getFileData(){
         FileInputStream file;
         ObjectInputStream objectIn;
-        Map<String,MemoryInformation> obj  =null;
+//        Map<String,MemoryInformation> obj  =null;
+        Object obj  =null;
         try {            
-            file        =new FileInputStream(this.URL);
+            file        =new FileInputStream(this.URL);            
+            if(file.available()==0)return null;
             objectIn    =new ObjectInputStream(file);
-            obj=(Map<String,MemoryInformation>)objectIn.readObject();
+//            obj=(Map<String,MemoryInformation>)objectIn.readObject();
+            obj=objectIn.readObject();
             objectIn.close();
             file.close();
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {            
+            System.err.println(ex);
             Logger.getLogger(LongTermMemoryFile.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | ClassNotFoundException ex) {
+            System.err.println("Aqui 1");
+            System.err.println(ex);
             Logger.getLogger(LongTermMemoryFile.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return obj;
+        return (Map<String,MemoryInformation>)obj;
     }
 }

@@ -1,5 +1,8 @@
 package carina.metacore;
-abstract public class RootElement {
+
+import java.io.Serializable;
+
+abstract public class RootElement implements Serializable{
     private String name;
     private Object output;
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">

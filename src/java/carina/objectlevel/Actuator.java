@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package carina.memory;
+package carina.objectlevel;
+
+import carina.metacore.RootElement;
 
 /**
  *
  * @author jalheart
  */
-public class SensorMemory extends  Memory{
-    public SensorMemory(MemoryDriver driver) {
-        super(driver);        
-    }
+public class Actuator extends RootElement{
+    
 }

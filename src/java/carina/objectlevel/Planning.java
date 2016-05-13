@@ -5,52 +5,52 @@
  */
 package carina.objectlevel;
 
-import carina.memory.LongTermMemory;
-import carina.memory.MemoryInformation;
 import carina.memory.WorkingMemory;
 import carina.metacore.CognitiveFunction;
 import carina.metacore.ComputationalStrategy;
+import carina.metacore.Plan;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import objectlevel.old.models.ModelOfTheWorld;
 
 /**
  *
  * @author jalheart
  */
-public class Categorization extends CognitiveFunction{
-
+public class Planning extends CognitiveFunction{
     @Override
     public Object processInformation(Object value) {
         return this.processInformation((Class<ComputationalStrategy>)value);
     }
-    public List<Object> processInformation(Class<ComputationalStrategy> value) {
-        WorkingMemory workingMemory             =WorkingMemory.getInstance();
-        BasicCognitiveProcessingUnit    bcpu    =workingMemory.getBcpu();
-        Object information                      =bcpu.getInput().getInformation();
-
-        List<Category> categories   =this.getCategories();
+    public Map<String,Plan> processInformation(Class<ComputationalStrategy> value) {
+        BasicCognitiveProcessingUnit bcpu   =WorkingMemory.getInstance().getBcpu();
+        List<Category> categories   =bcpu.getCategorys();
         try {
             Constructor<?> constructor  =value.getConstructor(List.class);
             ComputationalStrategy   algorithmStrategy   =(ComputationalStrategy)constructor.newInstance(categories);
-            List<Object> categorization   =(List<Object>)algorithmStrategy.run();            
-            bcpu.addCategories(categorization);
-            workingMemory.setBcpu(bcpu);
-            workingMemory.updateMentalState("is_categorized", (categorization !=null && categorization.size()>0));
-            return categorization;
+            Map<String,Plan> plans   =(Map<String,Plan>)algorithmStrategy.run();            
+            bcpu.addPlans(plans);
+            WorkingMemory.getInstance().setBcpu(bcpu);
+            WorkingMemory.getInstance().updateMentalState("is_planned", (plans !=null && plans.size()>0));
+            return plans;
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {            
             Logger.getLogger(Categorization.class.getName()).log(Level.SEVERE, null, ex);
-            workingMemory.updateMentalState("is_categorized",false);
-            return new ArrayList<>();
+            WorkingMemory.getInstance().updateMentalState("is_categorized",false);
+            return new HashMap<>();
         }
     }
-    public List<Category>getCategories(){
-        MemoryInformation   mem= LongTermMemory.getInstance().retrieveInformation("categories");
-        return mem==null?null:(List<Category>)mem.information;
+    public Object executePlans(){
+        BasicCognitiveProcessingUnit bcpu   =WorkingMemory.getInstance().getBcpu();
+        Map<String,Plan> plans              =bcpu.getPlans();
+        List<Category> categories           =bcpu.getCategorys();
+        for (Category category : categories) {
+            plans.get((String)category.getCategory()).executePlan();
+        }
+        return null;
     }
 }

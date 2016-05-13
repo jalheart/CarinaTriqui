@@ -5,6 +5,8 @@
  */
 package carina.metacore;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jalheart

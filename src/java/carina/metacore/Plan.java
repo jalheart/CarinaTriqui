@@ -5,6 +5,8 @@
  */
 package carina.metacore;
 
+import carina.memory.WorkingMemory;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,14 +16,22 @@ import java.util.List;
 public class Plan extends Element{
     private List<Task> actions;
     private int currentAction   =0;
-    public void executePlan(){
+    public Plan() {
+        actions =new ArrayList<>();
+    }
+    /**
+     * 
+     * @return Boolean Indic si todo el plan se ejecutó satisfactoriamente
+     */
+    public Object executePlan(){
         Task ca;
+        if(this.getActions().size()<=0)return null;
         do {
             ca =this.getActions().get(this.getCurrentAction());
             ca.run();
             this.setCurrentAction(this.getCurrentAction()+1);
-        } while (this.currentAction<this.getActionsLength());
-        
+        } while (this.currentAction<this.getActionsLength() && !ca._stopPlan);
+        return true;
     }
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     public int getActionsLength(){
