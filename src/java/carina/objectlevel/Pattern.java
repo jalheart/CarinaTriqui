@@ -12,6 +12,13 @@ import carina.metacore.RootElement;
  * @author jalheart
  */
 public class Pattern extends RootElement{
+
+    public Pattern() {
+    }
+    public Pattern(Object pattern) {
+        this.setPattern(pattern);
+    }
+    
     private Object pattern;
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**

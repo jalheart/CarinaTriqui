@@ -5,7 +5,6 @@
  */
 package carina.memory;
 
-import carina.metalevel.old.metamemory.LongTermMemoryFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,8 +29,8 @@ public class MemoryDriverFile extends MemoryDriver{
         this.createFile();
     }
     @Override
-    public void storeInformation(MemoryInformation information) {
-        Map<String,MemoryInformation> data =this.getFileData();
+    public void storeInformation(BasicMemoryUnity information) {
+        Map<String,BasicMemoryUnity> data =this.getFileData();
         if(data==null){
             data    =new HashMap<>();
         }
@@ -39,13 +38,13 @@ public class MemoryDriverFile extends MemoryDriver{
         this.saveFileData(data);
     }
     @Override
-    public MemoryInformation retrieveInformation(String cue) {
-        Map<String,MemoryInformation> data =(Map<String,MemoryInformation>)this.getFileData();
+    public BasicMemoryUnity retrieveInformation(String cue) {
+        Map<String,BasicMemoryUnity> data =(Map<String,BasicMemoryUnity>)this.getFileData();
         return data==null?null:(data.get(cue));
     }
     @Override
     public void forgetInformation(String cue) {
-        Map<String,MemoryInformation> data =this.getFileData();
+        Map<String,BasicMemoryUnity> data =this.getFileData();
         if(data==null){
             data    =new HashMap<>();
         }
@@ -62,7 +61,7 @@ public class MemoryDriverFile extends MemoryDriver{
         } catch (Exception e) {
         }        
     }
-    private void saveFileData(Map<String,MemoryInformation> data){
+    private void saveFileData(Map<String,BasicMemoryUnity> data){
         try {
             FileOutputStream file;
             ObjectOutputStream objectOut;                        
@@ -78,7 +77,7 @@ public class MemoryDriverFile extends MemoryDriver{
             Logger.getLogger(MemoryDriverFile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private Map<String,MemoryInformation> getFileData(){
+    private Map<String,BasicMemoryUnity> getFileData(){
         FileInputStream file;
         ObjectInputStream objectIn;
 //        Map<String,MemoryInformation> obj  =null;
@@ -92,13 +91,11 @@ public class MemoryDriverFile extends MemoryDriver{
             objectIn.close();
             file.close();
         } catch (FileNotFoundException ex) {            
-            System.err.println(ex);
-            Logger.getLogger(LongTermMemoryFile.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);            
         } catch (IOException | ClassNotFoundException ex) {
             System.err.println("Aqui 1");
-            System.err.println(ex);
-            Logger.getLogger(LongTermMemoryFile.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex);            
         }
-        return (Map<String,MemoryInformation>)obj;
+        return (Map<String,BasicMemoryUnity>)obj;
     }
 }

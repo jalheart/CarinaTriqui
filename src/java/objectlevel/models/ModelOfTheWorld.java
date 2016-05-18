@@ -5,7 +5,7 @@
  */
 package objectlevel.models;
 
-import carina.memory.MemoryInformation;
+import carina.memory.BasicMemoryUnity;
 import carina.memory.WorkingMemory;
 import carina.metacore.Goal;
 import java.io.Serializable;
@@ -87,7 +87,7 @@ public class ModelOfTheWorld implements Serializable{
      * @return the is_created
      */
     public Boolean getStateIs_created() {
-        MemoryInformation isCreated =WorkingMemory.getInstance().retrieveInformation("is_created");
+        BasicMemoryUnity isCreated =WorkingMemory.getInstance().retrieveInformation("is_created");
         return isCreated!=null?(Boolean)isCreated.information:this.is_created;        
     }
     /**
@@ -138,7 +138,7 @@ public class ModelOfTheWorld implements Serializable{
     }
 // </editor-fold>
     public void updateModelOfTheWorld(){
-        WorkingMemory.getInstance().storeInformation(new MemoryInformation("cells", this.getBoard().getCells()));
-        WorkingMemory.getInstance().storeInformation(new MemoryInformation("is_created", this.getStateIs_created()));
+        WorkingMemory.getInstance().storeInformation(new BasicMemoryUnity("cells", this.getBoard().getCells()));
+        WorkingMemory.getInstance().storeInformation(new BasicMemoryUnity("is_created", this.getStateIs_created()));
     }
 }

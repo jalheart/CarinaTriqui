@@ -20,8 +20,7 @@ public class Plan extends Element{
         actions =new ArrayList<>();
     }
     /**
-     * 
-     * @return Boolean Indic si todo el plan se ejecutó satisfactoriamente
+     * @return Boolean Indica si el plan se ejecutó satisfactoriamente
      */
     public Object executePlan(){
         Task ca;

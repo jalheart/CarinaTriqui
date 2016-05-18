@@ -5,7 +5,7 @@
  */
 package objectlevel.models;
 
-import carina.memory.MemoryInformation;
+import carina.memory.BasicMemoryUnity;
 import carina.memory.WorkingMemory;
 import carina.metacore.ComputationalStrategy;
 import carina.objectlevel.BasicCognitiveProcessingUnit;
@@ -31,7 +31,7 @@ public class CategorizationAlgorithmStrategy extends ComputationalStrategy{
         List<Object> categoriesTmp  =new ArrayList<>();
         WorkingMemory workingMemory         =WorkingMemory.getInstance();
         BasicCognitiveProcessingUnit bcpu   =workingMemory.getBcpu();
-        MemoryInformation memoryInformation =(MemoryInformation)bcpu.getInput().getInformation();
+        BasicMemoryUnity memoryInformation =(BasicMemoryUnity)bcpu.getInput().getInformation();
         this.setModelOfTheWorld(workingMemory.getModel_of_the_world());
         this.setValue((String)memoryInformation.information);
         

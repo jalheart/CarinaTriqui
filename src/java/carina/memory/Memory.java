@@ -16,10 +16,10 @@ abstract public class Memory{
     /**
      * @param information type MemoryInformation
      */
-    public void storeInformation(MemoryInformation information){
+    public void storeInformation(BasicMemoryUnity information){
         this.getDriver().storeInformation(information);
     }
-    public MemoryInformation retrieveInformation(String cue){
+    public BasicMemoryUnity retrieveInformation(String cue){
         return this.getDriver().retrieveInformation(cue);
     }
     public void forgetInformation(String cue){

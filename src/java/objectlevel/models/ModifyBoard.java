@@ -5,8 +5,7 @@
  */
 package objectlevel.models;
 
-import carina.memory.Memory;
-import carina.memory.MemoryInformation;
+import carina.memory.BasicMemoryUnity;
 import carina.memory.WorkingMemory;
 import carina.objectlevel.ReasoningTask;
 
@@ -23,7 +22,7 @@ public class ModifyBoard extends ReasoningTask{
     public Object run(){
         this.workingMemory  =WorkingMemory.getInstance();
         String[][]  cells   =this.workingMemory.getModel_of_the_world().getBoard().getCells();
-        String positionTmp  =(String)((MemoryInformation)this.workingMemory.getBcpu().getInput().getInformation()).information;
+        String positionTmp  =(String)((BasicMemoryUnity)this.workingMemory.getBcpu().getInput().getInformation()).information;
         String[] position   =positionTmp.split("_");        
         this.workingMemory.getModel_of_the_world().getBoard().setData(Integer.parseInt(position[0]), Integer.parseInt(position[1]), this.workingMemory.getModel_of_the_world().currentToken());
         this.workingMemory.getModel_of_the_world().updateModelOfTheWorld();

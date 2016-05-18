@@ -5,8 +5,8 @@
  */
 package carina.objectlevel;
 
+import carina.memory.BasicMemoryUnity;
 import carina.memory.LongTermMemory;
-import carina.memory.MemoryInformation;
 import carina.memory.WorkingMemory;
 import carina.metacore.CognitiveFunction;
 import carina.metacore.ComputationalStrategy;
@@ -14,10 +14,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import objectlevel.old.models.ModelOfTheWorld;
 
 /**
  *
@@ -50,7 +48,7 @@ public class Categorization extends CognitiveFunction{
         }
     }
     public List<Category>getCategories(){
-        MemoryInformation   mem= LongTermMemory.getInstance().retrieveInformation("categories");
+        BasicMemoryUnity   mem= LongTermMemory.getInstance().retrieveInformation("categories");
         return mem==null?null:(List<Category>)mem.information;
     }
 }

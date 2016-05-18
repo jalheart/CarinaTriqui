@@ -6,6 +6,7 @@
 package objectlevel.controllers;
 
 import carina.memory.WorkingMemory;
+import carina.metacore.Event;
 import carina.metacore.Plan;
 import carina.metacore.State;
 import carina.objectlevel.BasicCognitiveProcessingUnit;
@@ -79,12 +80,12 @@ public class Reasoner {
         }
         return false;
     }
-    public Boolean perception(){
-        if(!this.sensing()) return false;        
+    public Boolean perception(){        
+        if(!this.sensing()) return false;
         _perception.processInformation(new HashMap<String, Object>(){{
             put("information", _playerMovement.getMovement());
             put("type_sensor", "player_movement");
-        }});
+        }});        
         return true;
     }
     public Boolean recognition(){
@@ -106,8 +107,8 @@ public class Reasoner {
 //            bcpu.getPlans().get((String)category.getCategory()).executePlan();
 //        }
     }
-    public void showBoard(){
+    public void showBoard(List<Event> events){
         ViewBoard   vb  =new ViewBoard(this._out);        
-        vb.showBoard(this._workingMemory.getModel_of_the_world().getBoard().getCells(),null);
+        vb.showBoard(this._workingMemory.getModel_of_the_world().getBoard().getCells(),events);
     }
 }

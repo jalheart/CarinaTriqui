@@ -39,13 +39,13 @@ public class ViewBoard extends Actuator{
             output += "<tr>";
             for (j=0; j < 3; j++) { 
                 if(data[i][j]==null){
-                    output += "<td><input type='submit' name='player_move' value='"+i+"_"+j+"' ";
+                    output += "<td><input type='submit' name='player_move' value='"+i+"_"+j+"' ></td>";
                 }else{
-                    output += "<td><input type='submit' name='player_move' value='"+data[i][j]+"' ";
+                    output += "<td><input type='submit' name='player_move' value='"+data[i][j]+"' disabled></td>";
                 }
                 /*if($data[$i][$j] != '') 
                         $output .= "disabled";*/
-                output += "></td>";
+//                output += "></td>";
             }
             output += "</tr>";
         }

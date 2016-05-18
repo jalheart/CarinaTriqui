@@ -20,8 +20,8 @@ public class MemoryDriverSession extends MemoryDriver{
         this.table  =table;
     }
     @Override
-    public void storeInformation(MemoryInformation information) {
-        Map<String,MemoryInformation> tableData =(Map<String, MemoryInformation>)((HttpSession)this.getConfig()).getAttribute(getTable());
+    public void storeInformation(BasicMemoryUnity information) {
+        Map<String,BasicMemoryUnity> tableData =(Map<String, BasicMemoryUnity>)((HttpSession)this.getConfig()).getAttribute(getTable());
         if(tableData ==null){
             tableData   =new HashMap<>();
         }
@@ -29,13 +29,13 @@ public class MemoryDriverSession extends MemoryDriver{
         ((HttpSession)this.getConfig()).setAttribute(getTable(), tableData);
     }
     @Override
-    public MemoryInformation retrieveInformation(String cue) {
-        Map<String,MemoryInformation> tableData =(Map<String, MemoryInformation>)((HttpSession)this.getConfig()).getAttribute(getTable());        
+    public BasicMemoryUnity retrieveInformation(String cue) {
+        Map<String,BasicMemoryUnity> tableData =(Map<String, BasicMemoryUnity>)((HttpSession)this.getConfig()).getAttribute(getTable());        
         return tableData==null?null:tableData.get(cue);
     }
     @Override
     public void forgetInformation(String cue) {
-        Map<String,MemoryInformation> tableData =(Map<String, MemoryInformation>)((HttpSession)this.getConfig()).getAttribute(getTable());
+        Map<String,BasicMemoryUnity> tableData =(Map<String, BasicMemoryUnity>)((HttpSession)this.getConfig()).getAttribute(getTable());
         tableData.remove(cue);
         ((HttpSession)this.getConfig()).setAttribute(getTable(), tableData);
     }

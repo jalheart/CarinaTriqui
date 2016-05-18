@@ -27,7 +27,7 @@ public class WorkingMemory extends Memory{
     private Map<String,State>     mental_state;    
     private WorkingMemory(MemoryDriver driver) {
         super(driver);
-        MemoryInformation memoryTmp  =this.getDriver().retrieveInformation("bcpu");
+        BasicMemoryUnity memoryTmp  =this.getDriver().retrieveInformation("bcpu");
         if(memoryTmp!=null){
             this.setBcpu((BasicCognitiveProcessingUnit)memoryTmp.information);
         }
@@ -104,7 +104,7 @@ public class WorkingMemory extends Memory{
     public void setProfiles(Profile profile,Boolean s) {
         this.profiles.add(profile);
         if(!s){
-            this.getDriver().storeInformation(new MemoryInformation("profiles", this.profiles));
+            this.getDriver().storeInformation(new BasicMemoryUnity("profiles", this.profiles));
         }
     }    
 
@@ -141,7 +141,7 @@ public class WorkingMemory extends Memory{
 //            this.mental_state.add(mental_state);
         this.mental_state.put(mentalState.getName(), mentalState);
         if(!s){
-            this.getDriver().storeInformation(new MemoryInformation("mental_state", this.mental_state));
+            this.getDriver().storeInformation(new BasicMemoryUnity("mental_state", this.mental_state));
         }
     }
     /**
@@ -154,9 +154,9 @@ public class WorkingMemory extends Memory{
     // </editor-fold>
     
     public void syncBCPU(BasicCognitiveProcessingUnit value){
-        this.getDriver().storeInformation(new MemoryInformation("bcpu",value));
+        this.getDriver().storeInformation(new BasicMemoryUnity("bcpu",value));
     }
     public void syncModelOfTheWorld(ModelOfTheWorld value){
-        this.getDriver().storeInformation(new MemoryInformation("model_of_the_world",value));
+        this.getDriver().storeInformation(new BasicMemoryUnity("model_of_the_world",value));
     }
 }

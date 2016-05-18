@@ -5,8 +5,8 @@
  */
 package carina.objectlevel;
 
-import carina.memory.Memory;
-import carina.memory.MemoryInformation;
+import carina.memory.BasicMemoryUnity;
+import carina.memory.LongTermMemory;
 import carina.memory.PerceptualMemory;
 import carina.memory.WorkingMemory;
 import carina.metacore.CognitiveFunction;
@@ -32,27 +32,23 @@ public class Recognition extends CognitiveFunction{
         WorkingMemory workingMemory             =WorkingMemory.getInstance();
         BasicCognitiveProcessingUnit    bcpu    =workingMemory.getBcpu();
         Object information                      =bcpu.getInput().getInformation();
-//        Object information  =((BasicCognitiveProcessingUnit)value.get("bcpu")).getInput().getInformation();        
         try {
-//            Constructor<?> constructor  =((Class)value.get("algorithmStrategy")).getConstructor(Object.class);
+            
             Constructor<?> constructor  =value.getConstructor(Object.class);
-            ComputationalStrategy   algorithmStrategy   =(ComputationalStrategy)constructor.newInstance(((MemoryInformation)information).information);
+            ComputationalStrategy   algorithmStrategy   =(ComputationalStrategy)constructor.newInstance(((BasicMemoryUnity)information).information);
             Boolean recognition   =(Boolean)algorithmStrategy.run();
             
             Map<String,Object>  data    =new HashMap<>();
             data.put("value", information);
             data.put("recognized", recognition);
-            MemoryInformation mi =new MemoryInformation("recognitionData", data);
+            BasicMemoryUnity mi =new BasicMemoryUnity("recognitionData", data);
             PerceptualMemory.getInstance().storeInformation(mi);
             bcpu.addPattern(recognition);
             workingMemory.setBcpu(bcpu);
             return recognition;
-            //((BasicCognitiveProcessingUnit)value.get("bcpu")).addPattern(recognition);
-//            return ((BasicCognitiveProcessingUnit)value.get("bcpu"));            
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(Categorization.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }        
-//        return ((BasicCognitiveProcessingUnit)value.get("bcpu"));
+        }
     }
 }

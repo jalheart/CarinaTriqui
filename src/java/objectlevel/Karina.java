@@ -5,19 +5,22 @@
  */
 package objectlevel;
 
+import carina.memory.BasicMemoryUnity;
 import carina.memory.LongTermMemory;
-import carina.memory.MemoryDriver;
 import carina.memory.MemoryDriverFile;
-import carina.memory.MemoryDriverSQLite;
-import carina.memory.MemoryInformation;
+import carina.memory.MemoryDriverMySQL;
 import carina.memory.PerceptualMemory;
 import carina.memory.WorkingMemory;
+import carina.metacore.Event;
 import carina.metacore.State;
 import carina.objectlevel.BasicCognitiveProcessingUnit;
 import carina.objectlevel.Category;
 import carina.objectlevel.Input;
+import carina.objectlevel.Pattern;
+import com.mysql.jdbc.log.Log;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -29,19 +32,43 @@ import objectlevel.controllers.Reasoner;
  */
 public class Karina {
     public Karina(HttpSession sess,PrintWriter out,Map<String,String[]> inputs) {
-//        WorkingMemory.init(new MemoryDriverSQLite("working_memory"));
-//        WorkingMemory.init(new MemoryDriverSession(sess,"working_memory"));
-        
-        PerceptualMemory.init(new MemoryDriverFile("perceptual_memory"));
-        
-        LongTermMemory.init(new MemoryDriverFile("longterm_memory"));
+        Map<String,String> mysqlMemoriDriveConfig   =new HashMap<String, String>(){{
+                                                                                    put("server", "localhost");
+                                                                                    put("db", "karina");
+                                                                                    put("user", "root");
+                                                                                    put("pass", "");
+//                                                                                    put("table", "perception1");
+                                                                                }};
+        mysqlMemoriDriveConfig.put("table","perceptual_memory");
+        PerceptualMemory.init(new MemoryDriverMySQL(mysqlMemoriDriveConfig));
+//        LongTermMemory.init(new MemoryDriverFile("longterm_memory")); 
+        LongTermMemory.init(new MemoryDriverMySQL(new HashMap<String, String>(){{
+                                                                                put("server", "localhost");
+                                                                                put("db", "karina");
+                                                                                put("user", "root");
+                                                                                put("pass", "");
+                                                                                put("table", "longterm_memory");
+                                                                            }}));
 //        List<Category> initialCategories    =new ArrayList<>();
 //        initialCategories.add(new Category("playable"));
 //        initialCategories.add(new Category("reset"));
-//        MemoryInformation memoryInformation =new MemoryInformation("categories", initialCategories);
+//        BasicMemoryUnity memoryInformation =new BasicMemoryUnity("categories", initialCategories);
 //        LongTermMemory.getInstance().storeInformation(memoryInformation);
+//        List<Pattern>   initialPatterns =new ArrayList<>();
+//        initialPatterns.add(new Pattern("[0-2]_[0-2]"));
+//        initialPatterns.add(new Pattern("1"));
+//        LongTermMemory.getInstance().storeInformation(new BasicMemoryUnity("patterns",initialPatterns));
         
-        WorkingMemory.init(new MemoryDriverFile("working_memory"));
+//       BasicMemoryUnity bmu= LongTermMemory.getInstance().retrieveInformation("cat%");
+//       out.print(((List<Category>)bmu.information).get(0).getCategory());
+//        WorkingMemory.init(new MemoryDriverFile("working_memory"));
+        WorkingMemory.init(new MemoryDriverMySQL(new HashMap<String, String>(){{
+                                                                                put("server", "localhost");
+                                                                                put("db", "karina");
+                                                                                put("user", "root");
+                                                                                put("pass", "");
+                                                                                put("table", "working_memory");
+                                                                            }}));
         WorkingMemory wm    =WorkingMemory.getInstance();
         
         wm.setMental_state( new State("is_system_started", true));        
@@ -59,28 +86,36 @@ public class Karina {
         
         wm.setBcpu(new BasicCognitiveProcessingUnit());
         
+        List<Event> eventos =new ArrayList<>();
+        wm.storeInformation(new BasicMemoryUnity("events", eventos));
+       
+//        PerceptualMemory pmTmp  =new PerceptualMemory(new MemoryDriverMySQL(new HashMap<String, String>(){{
+//                                                                                                            put("server", "localhost");
+//                                                                                                            put("db", "karina");
+//                                                                                                            put("user", "root");
+//                                                                                                            put("pass", "");
+//                                                                                                            put("table", "perception1");
+//                                                                                                        }}));
+//        pmTmp.storeInformation(new BasicMemoryUnity("algo", new Input("Entrada", "esta")));
+//        BasicMemoryUnity mi= pmTmp.retrieveInformation("algo");
+//        System.out.println(((Input)mi.information).getInformation());
         
-//        PerceptualMemory pmTmp  =new PerceptualMemory(new MemoryDriverSQLite("memoria_de_prueba"));
-//        pmTmp.storeInformation(new MemoryInformation("algo", new Input("Entrada", "esta")));
-//        pmTmp.retrieveInformation("algo");
-        //TODO La memoria se manejará usando la unidad básica de memoria
-        Reasoner reasoner   =new Reasoner(inputs,out);        
-        out.print("Perception...</br>");
+        Reasoner reasoner   =new Reasoner(inputs,out);
+        eventos.add(new Event("Perception..."));
         if(reasoner.perception()){
-            out.print("Recognition...</br>");
+            eventos.add(new Event("Recognition..."));
             if(reasoner.recognition()){
-                out.print("Categorization...</br>");
+                eventos.add(new Event("Categorization..."));
                 reasoner.categorization();
-//                System.out.println("is_categorized: "+wm.getMental_state("is_categorized").getValue());
                 if(wm.getMental_state("is_categorized").getValue()){//Es una categoria conocida
-                    out.print("Planning...</br>");
+                    eventos.add(new Event("Planning..."));
                     reasoner.planing();
-                    out.print("Executing plan...</br>");
+                    eventos.add(new Event("Executing plan..."));
                     reasoner.run();
                 }
             }
         }        
-        out.print("Acting...</br>");        
-        reasoner.showBoard();
+        eventos.add(new Event("Acting..."));
+        reasoner.showBoard(eventos);
     }
 }

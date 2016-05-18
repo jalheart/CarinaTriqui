@@ -5,11 +5,8 @@
  */
 package carina.memory;
 
-import carina.metalevel.old.metamemory.LongTermMemorySQLite;
 import carina.objectlevel.Input;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,11 +22,10 @@ public class MemoryDriverSQLite extends MemoryDriver{
     }
 
     @Override
-    public void storeInformation(MemoryInformation information) {
+    public void storeInformation(BasicMemoryUnity information) {
         //TODO Hace falta serializar y deserializar los objetos almacenados
         Statement s;
         this.conectar();
-        System.out.println("Aqui estoy");
         try {
 //            s = c.createStatement();
 //            String sql = "INSERT OR REPLACE INTO LONG_TERM_MEMORY " +
@@ -49,7 +45,7 @@ public class MemoryDriverSQLite extends MemoryDriver{
     }
 
     @Override
-    public MemoryInformation retrieveInformation(String cue) {
+    public BasicMemoryUnity retrieveInformation(String cue) {
         Object salida   =null;
         this.conectar();
         Statement s;
@@ -67,7 +63,7 @@ public class MemoryDriverSQLite extends MemoryDriver{
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );            
         }
         this.desconectar();
-        return (MemoryInformation)salida;
+        return (BasicMemoryUnity)salida;
     }
 
     @Override
@@ -102,8 +98,7 @@ public class MemoryDriverSQLite extends MemoryDriver{
         try {
             c.close();
         } catch (SQLException ex) {
-            System.out.println("Error cerrando");
-            Logger.getLogger(LongTermMemorySQLite.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error cerrando");            
         }
     }
 }

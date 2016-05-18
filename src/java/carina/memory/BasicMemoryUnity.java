@@ -11,11 +11,11 @@ import java.io.Serializable;
  *
  * @author jalheart
  */
-public class MemoryInformation implements Serializable{
+public class BasicMemoryUnity implements Serializable{
     public String cue;
     public Object information;
 
-    public MemoryInformation(String cue, Object information) {
+    public BasicMemoryUnity(String cue, Object information) {
         this.cue    =cue;
         this.information=information;
     }

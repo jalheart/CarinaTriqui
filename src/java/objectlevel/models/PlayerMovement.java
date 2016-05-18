@@ -5,8 +5,8 @@
  */
 package objectlevel.models;
 
+import carina.memory.BasicMemoryUnity;
 import carina.memory.MemoryDriverFile;
-import carina.memory.MemoryInformation;
 import carina.memory.SensorMemory;
 import carina.objectlevel.MouseSensor;
 
@@ -20,7 +20,7 @@ public class PlayerMovement extends MouseSensor{
         this.sensorMemory   =new SensorMemory(new MemoryDriverFile("sensor_memory_player_move"));
     }
     public void setMovement(Object value){
-        this.sensorMemory.storeInformation(new MemoryInformation(this.getType(), value));
+        this.sensorMemory.storeInformation(new BasicMemoryUnity(this.getType(), value));
     }
     public Object getMovement(){
         return this.sensorMemory.retrieveInformation(this.getType());

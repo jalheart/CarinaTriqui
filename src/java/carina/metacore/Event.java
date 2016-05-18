@@ -10,5 +10,10 @@ package carina.metacore;
  * @author jalheart
  */
 public class Event extends Element{
-    
+
+    public Event() {
+    }
+    public Event(String name) {
+        this.setName(name);
+    }    
 }

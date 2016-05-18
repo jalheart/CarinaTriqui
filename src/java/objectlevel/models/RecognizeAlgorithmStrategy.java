@@ -5,7 +5,11 @@
  */
 package objectlevel.models;
 
+import carina.memory.BasicMemoryUnity;
+import carina.memory.LongTermMemory;
 import carina.metacore.ComputationalStrategy;
+import carina.objectlevel.Pattern;
+import java.util.List;
 
 /**
  *
@@ -18,9 +22,16 @@ public class RecognizeAlgorithmStrategy extends ComputationalStrategy{
     }
     
     @Override
-    public Object run() {
-        //TODO esto [0-2]_[0-2] deberia estar en la LongTermMemory
-        return java.util.regex.Pattern.matches("[0-2]_[0-2]", (String)this.getValue()) || "1".equals(this.getValue());
+    public Object run() {        
+        //Se cargan todos lo patrones en la memoria de largo plazo
+        BasicMemoryUnity    bmu =LongTermMemory.getInstance().retrieveInformation("patterns");
+        List<Pattern> patterns   =(List<Pattern>)bmu.information;
+        //Se verifica que el valor ingresado corresponda con algun patron
+        for (Pattern pattern : patterns) {
+            if(java.util.regex.Pattern.matches((String)pattern.getPattern(), (String)this.getValue()))
+                return true;
+        }
+        return false;
     }
 
     /**

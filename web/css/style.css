@@ -43,3 +43,13 @@ table tr td a, .reset{
     background-color: white;
     height: 30px;
 }
+table.events{
+    position: fixed;
+    top:0px;
+    width: 200px;
+}
+
+table.events td {
+    height: 30px;
+    background-color: #ffffff;
+}

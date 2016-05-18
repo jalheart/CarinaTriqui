@@ -5,6 +5,8 @@
  */
 package carina.memory;
 
+import java.util.List;
+
 /**
  *
  * @author jalheart
@@ -14,8 +16,8 @@ abstract public class MemoryDriver{
     public MemoryDriver(Object config) {
         this.setConfig(config);
     }
-    abstract public void storeInformation(MemoryInformation information);
-    abstract public MemoryInformation retrieveInformation(String cue);
+    abstract public void storeInformation(BasicMemoryUnity information);
+    abstract public BasicMemoryUnity retrieveInformation(String cue);
     abstract public void forgetInformation(String cue);
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**
