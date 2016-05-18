@@ -7,17 +7,12 @@ package objectlevel;
 
 import carina.memory.BasicMemoryUnity;
 import carina.memory.LongTermMemory;
-import carina.memory.MemoryDriverFile;
 import carina.memory.MemoryDriverMySQL;
 import carina.memory.PerceptualMemory;
 import carina.memory.WorkingMemory;
 import carina.metacore.Event;
 import carina.metacore.State;
 import carina.objectlevel.BasicCognitiveProcessingUnit;
-import carina.objectlevel.Category;
-import carina.objectlevel.Input;
-import carina.objectlevel.Pattern;
-import com.mysql.jdbc.log.Log;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +51,7 @@ public class Karina {
 //        LongTermMemory.getInstance().storeInformation(memoryInformation);
 //        List<Pattern>   initialPatterns =new ArrayList<>();
 //        initialPatterns.add(new Pattern("[0-2]_[0-2]"));
-//        initialPatterns.add(new Pattern("1"));
+//        initialPatterns.add(new Pattern("reset"));
 //        LongTermMemory.getInstance().storeInformation(new BasicMemoryUnity("patterns",initialPatterns));
         
 //       BasicMemoryUnity bmu= LongTermMemory.getInstance().retrieveInformation("cat%");
@@ -101,21 +96,15 @@ public class Karina {
 //        System.out.println(((Input)mi.information).getInformation());
         
         Reasoner reasoner   =new Reasoner(inputs,out);
-        eventos.add(new Event("Perception..."));
         if(reasoner.perception()){
-            eventos.add(new Event("Recognition..."));
-            if(reasoner.recognition()){
-                eventos.add(new Event("Categorization..."));
+            if(reasoner.recognition()){                
                 reasoner.categorization();
                 if(wm.getMental_state("is_categorized").getValue()){//Es una categoria conocida
-                    eventos.add(new Event("Planning..."));
                     reasoner.planing();
-                    eventos.add(new Event("Executing plan..."));
                     reasoner.run();
                 }
             }
         }        
-        eventos.add(new Event("Acting..."));
-        reasoner.showBoard(eventos);
+        reasoner.showBoard();
     }
 }

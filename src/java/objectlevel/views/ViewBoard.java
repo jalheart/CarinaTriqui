@@ -49,7 +49,7 @@ public class ViewBoard extends Actuator{
             }
             output += "</tr>";
         }
-        output += "<tr><td colspan='3'><a href='?reset=1'>REINICIAR</a></td></tr>";
+        output += "<tr><td colspan='3'><a href='?reset=reset'>REINICIAR</a></td></tr>";
         output += "</tbody></table></form>";
 
         if(events==null)return output;

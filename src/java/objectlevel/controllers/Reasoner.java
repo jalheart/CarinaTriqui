@@ -5,34 +5,23 @@
  */
 package objectlevel.controllers;
 
+import carina.memory.BasicMemoryUnity;
 import carina.memory.WorkingMemory;
 import carina.metacore.Event;
 import carina.metacore.Plan;
-import carina.metacore.State;
-import carina.objectlevel.BasicCognitiveProcessingUnit;
 import carina.objectlevel.Categorization;
-import carina.objectlevel.Category;
-import carina.objectlevel.Input;
 import carina.objectlevel.Perception;
 import carina.objectlevel.Planning;
 import carina.objectlevel.Recognition;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import objectlevel.models.Board;
 import objectlevel.models.CategorizationAlgorithmStrategy;
-import objectlevel.models.ChangeTurn;
-import objectlevel.models.MachinePlays;
 import objectlevel.models.ModelOfTheWorld;
-import objectlevel.models.ModifyBoard;
 import objectlevel.models.PlanningAlgorithmStrategy;
 import objectlevel.models.PlayerMovement;
 import objectlevel.models.RecognizeAlgorithmStrategy;
-import objectlevel.models.ResetBoard;
-import objectlevel.models.ShowWorld;
-import objectlevel.models.VerifyWinner;
 import objectlevel.views.ViewBoard;
 
 /**
@@ -70,6 +59,7 @@ public class Reasoner {
         this.plans  =new HashMap<>();
     }
     public Boolean sensing(){
+        this.addEvent(new Event("Sensing...."));
         if(this._inputs.get("player_move")!=null){
             this._playerMovement.setMovement(this._inputs.get("player_move")[0]);
             return true;
@@ -85,30 +75,46 @@ public class Reasoner {
         _perception.processInformation(new HashMap<String, Object>(){{
             put("information", _playerMovement.getMovement());
             put("type_sensor", "player_movement");
-        }});        
+        }});
+        
+        addEvent(new Event("Perception..."+((BasicMemoryUnity)WorkingMemory.getInstance().getBcpu().getInput().getInformation()).information));
+        
         return true;
     }
     public Boolean recognition(){
         Boolean recognized  =(Boolean)this._recognition.processInformation(RecognizeAlgorithmStrategy.class);
         _workingMemory.updateMentalState("is_recognized", recognized);
+        addEvent(new Event("Recognition..."+recognized));
         return recognized;
     }
     public List<Object> categorization(){
-        return  (List<Object>)this._categorization.processInformation(CategorizationAlgorithmStrategy.class);
+        List<Object> categories   =(List<Object>)this._categorization.processInformation(CategorizationAlgorithmStrategy.class);
+        addEvent(new Event("Categorization..."+categories.toString()));
+        return  categories;
     }
     public void planing(){
-        _planning.processInformation(PlanningAlgorithmStrategy.class);        
+        _planning.processInformation(PlanningAlgorithmStrategy.class);
+        //Para mostrar el plan , hay que cargar los planes de la bcpu, cargar las categorias de la bcpu, para cada categoria hay un plan,en cada plan hay una accion
+        addEvent(new Event("Planning..."));
     }
     public void run(){
         _planning.executePlans();
-//        BasicCognitiveProcessingUnit bcpu   =this._workingMemory.getBcpu();
-//        List<Category> categories           =bcpu.getCategorys();
-//        for (Category category : categories) {
-//            bcpu.getPlans().get((String)category.getCategory()).executePlan();
-//        }
+        addEvent(new Event("Executing plan..."));
     }
-    public void showBoard(List<Event> events){
-        ViewBoard   vb  =new ViewBoard(this._out);        
+    public void showBoard(){
+        addEvent(new Event("Acting..."));
+        
+        BasicMemoryUnity bmu    =WorkingMemory.getInstance().retrieveInformation("events");//Se obtiene el recuerdo
+        List<Event> events =(List<Event>)bmu.information;//Se saca la lista de eventos
+        
+        ViewBoard   vb  =new ViewBoard(this._out);
         vb.showBoard(this._workingMemory.getModel_of_the_world().getBoard().getCells(),events);
+    }
+    public void addEvent(Event event){
+        BasicMemoryUnity bmu    =WorkingMemory.getInstance().retrieveInformation("events");//Se obtiene el recuerdo
+        List<Event> eventos =(List<Event>)bmu.information;//Se saca la lista de eventos        
+        eventos.add(event);//Se agrega el nuevo evento
+        bmu.information =eventos;//Se actualiza el recuerdo
+        WorkingMemory.getInstance().storeInformation(bmu);//Se registra en la memoria
     }
 }
