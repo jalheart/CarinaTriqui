@@ -17,9 +17,12 @@ public class MachinePlays extends ReasoningTask{
     @Override
     public Object run() {
         this.workingMemory  =WorkingMemory.getInstance();
-        RandomAlgorithmStrategy   strategy    =new RandomAlgorithmStrategy(this.workingMemory.getModel_of_the_world().getBoard().getCells());
-        int[]   position    =(int[])strategy.run();
         ModelOfTheWorld modelOfTheWorld =workingMemory.getModel_of_the_world();
+        //TODO Vamos a incluir metacognición
+        RandomAlgorithmStrategy   strategy    =new RandomAlgorithmStrategy(modelOfTheWorld.getBoard().getCells());
+        MiniMaxAlgorithmStrategy mmStrategy =new MiniMaxAlgorithmStrategy(modelOfTheWorld.getBoard().getCells(), modelOfTheWorld.currentToken());
+//        int[]   position    =(int[])strategy.run();
+        int[]   position    =(int[])mmStrategy.run();
         modelOfTheWorld.getBoard().setData(position[0], position[1], modelOfTheWorld.currentToken());
         this.workingMemory.setModel_of_the_world(modelOfTheWorld);
         return null;

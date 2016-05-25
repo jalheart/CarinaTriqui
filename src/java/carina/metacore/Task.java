@@ -12,6 +12,7 @@ import java.util.Optional;
  * @author jalheart
  */
 abstract public class Task extends FuntionalElement{
+    //TODO Crear una clase Action que hereda de esta y se le agregan los atributos Effect y Precond(ver goap)
     private Goal goal;
     protected Boolean _executed     =false;
     protected Boolean _successful   =false;

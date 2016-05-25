@@ -34,13 +34,14 @@ public class CategorizationAlgorithmStrategy extends ComputationalStrategy{
         BasicMemoryUnity memoryInformation =(BasicMemoryUnity)bcpu.getInput().getInformation();
         this.setModelOfTheWorld(workingMemory.getModel_of_the_world());
         this.setValue((String)memoryInformation.information);
-        
+        //TODO cargar los patrones desde la bcpu
         if(java.util.regex.Pattern.matches("[0-2]_[0-2]", (String)this.getValue())){
             String[]    information =this.getValue().split("_");
             String[][]  cells   =this.getModelOfTheWorld().getBoard().getCells();
             String cellData =cells[Integer.parseInt(information[0])][Integer.parseInt(information[1])];        
             if(cellData==null || "".equals(cellData)){
-                for (Category category : this.getCategories()) {                
+                for (Category category : this.getCategories()) {
+                    //TODO Ya las categorias stan almacenadas en la memoria
                     if("playable".equals(category.getCategory())){
                         if(!categoriesTmp.contains(category.getCategory()))
                             categoriesTmp.add(category.getCategory());

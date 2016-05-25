@@ -59,6 +59,7 @@ public class ViewBoard extends Actuator{
         }
         output += "</tbody></table></div>";
         return output;
+        //TODO Mostrar tambien estados mtales y el historial de los eventos
     }
     private String footer(){
         return "</body></html>";

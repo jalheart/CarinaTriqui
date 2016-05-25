@@ -15,11 +15,7 @@ import carina.metacore.Action;
 public class ShowWorld extends Action{
     private WorkingMemory workingMemory;
     private Object styles;
-    public ShowWorld() {
-        this(null);
-    }
-    public ShowWorld(Object styles) {
-        this.setStyles(styles);
+    public ShowWorld() {        
     }
     public void run(){
         this.workingMemory  =WorkingMemory.getInstance();

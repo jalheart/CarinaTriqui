@@ -24,12 +24,14 @@ public class PlanningAlgorithmStrategy extends ComputationalStrategy{
     @Override
     public Object run() {
         Map<String,Plan> plans  =new HashMap<>();
+        //TODO Crear un banco de acciones
+        //TODO Las acciones se macentan en la LTM
         if("playable".equals(_categories.get(0).getCategory())){
             ModifyBoard modifyBoard     =new ModifyBoard();
             VerifyWinner verifyWinner   =new VerifyWinner();
             ChangeTurn  changeTurn      =new ChangeTurn();
             MachinePlays machinePlays   =new MachinePlays();
-            ShowWorld showWorld         =new ShowWorld(this);
+            ShowWorld showWorld         =new ShowWorld();
 
             Plan planTmp    =new Plan();
             planTmp.setAction(modifyBoard);
