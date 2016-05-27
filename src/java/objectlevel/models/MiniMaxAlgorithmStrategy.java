@@ -19,9 +19,10 @@ public class MiniMaxAlgorithmStrategy extends ComputationalStrategy{
     private String machineToken;
     private String playerToken;
     public MiniMaxAlgorithmStrategy(String[][] cells,String player){
+        TriquiModelOfTheWorld moftw =(TriquiModelOfTheWorld)WorkingMemory.getInstance().getModel_of_the_world();
         this.cells  =cells;
-        this.machineToken   =WorkingMemory.getInstance().getModel_of_the_world().getMachine_token();
-        this.playerToken   =WorkingMemory.getInstance().getModel_of_the_world().getPlayer_token();
+        this.machineToken   =moftw.getMachine_token();
+        this.playerToken    =moftw.getPlayer_token();
     } 
    /** Get next best move for computer. 
      * @return  int[2] of {row, col}*/   
@@ -44,7 +45,6 @@ public class MiniMaxAlgorithmStrategy extends ComputationalStrategy{
       int currentScore;
       int bestRow = -1;
       int bestCol = -1;
-        System.out.println("Moves "+nextMoves.isEmpty());
       if (nextMoves.isEmpty() || depth == 0) {
          // Gameover or depth reached, evaluate score
          bestScore = evaluate();
@@ -88,7 +88,6 @@ public class MiniMaxAlgorithmStrategy extends ComputationalStrategy{
       // Search for empty cells and add to the List
       for (int row = 0; row < 3; ++row) {
          for (int col = 0; col < 3; ++col) {
-             System.out.println("Celda "+cells[row][col]);
             if (cells[row][col]==null || cells[row][col].equals("")) {
                 movimientoTmp   =new int[2];
                 movimientoTmp[0]=row;

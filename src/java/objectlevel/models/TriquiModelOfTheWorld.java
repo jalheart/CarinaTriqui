@@ -8,21 +8,20 @@ package objectlevel.models;
 import carina.memory.BasicMemoryUnity;
 import carina.memory.WorkingMemory;
 import carina.metacore.Goal;
-import java.io.Serializable;
+import carina.objectlevel.ModelOfTheWorld;
 
 /**
  *
  * @author jalheart
  */
-public class ModelOfTheWorld implements Serializable{
+public class TriquiModelOfTheWorld extends ModelOfTheWorld{
     private Board  board;
-    private Boolean is_created      = false;
-    private Goal  mission;
+    
     private String  machine_token   = "O";
     private String  player_token    = "X";
     private Boolean is_me_turn      = false;
 
-    public ModelOfTheWorld() {
+    public TriquiModelOfTheWorld() {
         this.board  =new Board();
         this.board.create();
         this.setMission(new Goal());
@@ -42,18 +41,21 @@ public class ModelOfTheWorld implements Serializable{
     /**
      * Agrega los TOKENs usados para cada jugador
      * <p>
-     * @param String machine_token
-     * @param String player_token </p>
+     * @param machine_token
+     * @param player_token
+     * </p>
      */
     public void addTokens(String machine_token, String player_token){
         this.setMachine_token(machine_token);
         this.setPlayer_token(player_token);
     }
     public void addMission(String value){
-        this.getMission().getCurrentState().setName(value);
-        this.getMission().getCurrentState().setValue(false);
-        this.getMission().getTargetState().setName(value);
-        this.getMission().getTargetState().setValue(false);
+        if(this.getMission().getCurrentState()!=null){
+            this.getMission().getCurrentState().setName(value);
+            this.getMission().getCurrentState().setValue(false);
+            this.getMission().getTargetState().setName(value);
+            this.getMission().getTargetState().setValue(false);
+        }
     }
 // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**
@@ -68,34 +70,7 @@ public class ModelOfTheWorld implements Serializable{
      */
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    /**
-     * @return the mission
-     */
-    public Goal getMission() {
-        return mission;
-    }
-
-    /**
-     * @param mission the mission to set
-     */
-    public void setMission(Goal mission) {
-        this.mission = mission;
-    }
-    /**
-     * @return the is_created
-     */
-    public Boolean getStateIs_created() {
-        BasicMemoryUnity isCreated =WorkingMemory.getInstance().retrieveInformation("is_created");
-        return isCreated!=null?(Boolean)isCreated.information:this.is_created;        
-    }
-    /**
-     * @param is_created the is_created to set
-     */
-    public void setStateIs_created(Boolean is_created) {
-        this.is_created = is_created;
-    }
+    }        
     /**
      * @return the is_me_turn
      */
@@ -137,6 +112,7 @@ public class ModelOfTheWorld implements Serializable{
         this.player_token = player_token;
     }
 // </editor-fold>
+    @Override
     public void updateModelOfTheWorld(){
         WorkingMemory.getInstance().storeInformation(new BasicMemoryUnity("cells", this.getBoard().getCells()));
         WorkingMemory.getInstance().storeInformation(new BasicMemoryUnity("is_created", this.getStateIs_created()));

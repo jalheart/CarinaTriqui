@@ -93,7 +93,6 @@ public class MemoryDriverFile extends MemoryDriver{
         } catch (FileNotFoundException ex) {            
             System.err.println(ex);            
         } catch (IOException | ClassNotFoundException ex) {
-            System.err.println("Aqui 1");
             System.err.println(ex);            
         }
         return (Map<String,BasicMemoryUnity>)obj;

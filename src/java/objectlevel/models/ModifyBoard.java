@@ -21,12 +21,13 @@ public class ModifyBoard extends ReasoningTask{
      */
     public Object run(){
         this.workingMemory  =WorkingMemory.getInstance();
-        String[][]  cells   =this.workingMemory.getModel_of_the_world().getBoard().getCells();
+        TriquiModelOfTheWorld modelOfTheWorld   =   (TriquiModelOfTheWorld)this.workingMemory.getModel_of_the_world();
+        String[][]  cells   =modelOfTheWorld.getBoard().getCells();
         String positionTmp  =(String)((BasicMemoryUnity)this.workingMemory.getBcpu().getInput().getInformation()).information;
         String[] position   =positionTmp.split("_");        
-        this.workingMemory.getModel_of_the_world().getBoard().setData(Integer.parseInt(position[0]), Integer.parseInt(position[1]), this.workingMemory.getModel_of_the_world().currentToken());
-        this.workingMemory.getModel_of_the_world().updateModelOfTheWorld();
-        this.workingMemory.setModel_of_the_world(this.workingMemory.getModel_of_the_world());
+        modelOfTheWorld.getBoard().setData(Integer.parseInt(position[0]), Integer.parseInt(position[1]), modelOfTheWorld.currentToken());
+        modelOfTheWorld.updateModelOfTheWorld();
+        this.workingMemory.setModel_of_the_world(modelOfTheWorld);
         this._executed  =true;
         this._successful=true;
         this._stopPlan  =false;

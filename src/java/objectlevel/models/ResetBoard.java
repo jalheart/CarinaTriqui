@@ -16,7 +16,7 @@ public class ResetBoard extends ReasoningTask{
     @Override
     public Object run() {
         WorkingMemory workingMemory =WorkingMemory.getInstance();
-        ModelOfTheWorld modelOfTheorld  =workingMemory.getModel_of_the_world();
+        TriquiModelOfTheWorld modelOfTheorld  =(TriquiModelOfTheWorld)workingMemory.getModel_of_the_world();
         modelOfTheorld.setBoard(new Board());
         modelOfTheorld.getBoard().create();
         workingMemory.setModel_of_the_world(modelOfTheorld);

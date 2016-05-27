@@ -9,7 +9,6 @@ import carina.metacore.Event;
 import carina.objectlevel.Actuator;
 import java.io.PrintWriter;
 import java.util.List;
-import objectlevel.models.ModelOfTheWorld;
 
 /**
  *

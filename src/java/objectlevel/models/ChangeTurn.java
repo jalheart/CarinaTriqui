@@ -18,7 +18,7 @@ public class ChangeTurn extends ReasoningTask{
     @Override
     public Object run() {
         this.workingMemory  =WorkingMemory.getInstance();
-        this.workingMemory.getModel_of_the_world().changeTurn();
+        ((TriquiModelOfTheWorld)this.workingMemory.getModel_of_the_world()).changeTurn();
         this.workingMemory.syncModelOfTheWorld(this.workingMemory.getModel_of_the_world());
         return null;
     }

@@ -20,32 +20,33 @@ public class VerifyWinner extends ReasoningTask{
      */
     public Object run() {
         this.workingMemory  =WorkingMemory.getInstance();
-        String stateName    =workingMemory.getModel_of_the_world().currentToken().equals(workingMemory.getModel_of_the_world().getPlayer_token())?"is_player_winner_verified":"is_machine_winner_verified";        
-        String[][]  columns =this.transposition(this.workingMemory.getModel_of_the_world().getBoard().getCells());
-        String[][]  temp    =this.diagonal(this.workingMemory.getModel_of_the_world().getBoard().getCells());
+        TriquiModelOfTheWorld motw  =(TriquiModelOfTheWorld)workingMemory.getModel_of_the_world();
+        String stateName    =motw.currentToken().equals(motw.getPlayer_token())?"is_player_winner_verified":"is_machine_winner_verified";        
+        String[][]  columns =this.transposition(motw.getBoard().getCells());
+        String[][]  temp    =this.diagonal(motw.getBoard().getCells());
         String[]    diagonal=temp[0];
         String[]    cross   =temp[1];
         int i,countToken;
         for (i = 0; i < 3; i++) {
-            String[]    row = this.workingMemory.getModel_of_the_world().getBoard().getCells()[i];
-            countToken  =this.tell(row, this.workingMemory.getModel_of_the_world().currentToken());
-            if(countToken==3){
-                workingMemory.updateMentalState(stateName,true);
-                updateTaskState(true, true, true);                
-                return true;
-            }
-        }
-        for (i = 0; i < 3; i++) {
-            String[] column =columns[i];
-            countToken      =this.tell(column, this.workingMemory.getModel_of_the_world().currentToken());
+            String[]    row = motw.getBoard().getCells()[i];
+            countToken  =this.tell(row, motw.currentToken());
             if(countToken==3){
                 workingMemory.updateMentalState(stateName,true);
                 updateTaskState(true, true, true);
                 return true;
             }
         }
-        int count_d =this.tell(diagonal, this.workingMemory.getModel_of_the_world().currentToken());
-        int count_t =this.tell(cross, this.workingMemory.getModel_of_the_world().currentToken());
+        for (i = 0; i < 3; i++) {
+            String[] column =columns[i];
+            countToken      =this.tell(column, motw.currentToken());
+            if(countToken==3){
+                workingMemory.updateMentalState(stateName,true);
+                updateTaskState(true, true, true);
+                return true;
+            }
+        }
+        int count_d =this.tell(diagonal, motw.currentToken());
+        int count_t =this.tell(cross, motw.currentToken());
         if(count_d==3 || count_t==3){
             workingMemory.updateMentalState(stateName,true);
             updateTaskState(true, true, true);

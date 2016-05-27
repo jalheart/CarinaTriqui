@@ -18,10 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import objectlevel.models.CategorizationAlgorithmStrategy;
-import objectlevel.models.ModelOfTheWorld;
 import objectlevel.models.PlanningAlgorithmStrategy;
 import objectlevel.models.PlayerMovement;
 import objectlevel.models.RecognizeAlgorithmStrategy;
+import objectlevel.models.TriquiModelOfTheWorld;
 import objectlevel.views.ViewBoard;
 
 /**
@@ -45,7 +45,7 @@ public class Reasoner {
         this._out           =out;
         this._workingMemory =WorkingMemory.getInstance();
         if(this._workingMemory.getModel_of_the_world()==null){
-            ModelOfTheWorld modelOfTheWorld    =new ModelOfTheWorld();  
+            TriquiModelOfTheWorld modelOfTheWorld    =new TriquiModelOfTheWorld();  
             modelOfTheWorld.addMission("win_game");
             modelOfTheWorld.addTokens("O", "X");
             this._workingMemory.setModel_of_the_world(modelOfTheWorld);
@@ -107,8 +107,9 @@ public class Reasoner {
         BasicMemoryUnity bmu    =WorkingMemory.getInstance().retrieveInformation("events");//Se obtiene el recuerdo
         List<Event> events =(List<Event>)bmu.information;//Se saca la lista de eventos
         
+        TriquiModelOfTheWorld motw  =(TriquiModelOfTheWorld)WorkingMemory.getInstance().getModel_of_the_world();
         ViewBoard   vb  =new ViewBoard(this._out);
-        vb.showBoard(this._workingMemory.getModel_of_the_world().getBoard().getCells(),events);
+        vb.showBoard(motw.getBoard().getCells(),events);
     }
     public void addEvent(Event event){
         BasicMemoryUnity bmu    =WorkingMemory.getInstance().retrieveInformation("events");//Se obtiene el recuerdo

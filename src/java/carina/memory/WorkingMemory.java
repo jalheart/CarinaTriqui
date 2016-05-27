@@ -8,11 +8,10 @@ package carina.memory;
 import carina.metacore.Profile;
 import carina.metacore.State;
 import carina.objectlevel.BasicCognitiveProcessingUnit;
-import java.util.ArrayList;
+import carina.objectlevel.ModelOfTheWorld;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import objectlevel.models.ModelOfTheWorld;
 
 
 /**
@@ -72,14 +71,12 @@ public class WorkingMemory extends Memory{
         this.bcpu = bcpu;
         this.syncBCPU(bcpu);
     }
-
     /**
      * @return the model_of_the_world
      */
     public ModelOfTheWorld getModel_of_the_world() {
         return model_of_the_world;
     }
-
     /**
      * @param model_of_the_world the model_of_the_world to set
      */
@@ -87,7 +84,6 @@ public class WorkingMemory extends Memory{
         this.model_of_the_world = model_of_the_world;
         this.syncModelOfTheWorld(this.model_of_the_world);
     }
-
     /**
      * @return the profiles
      */

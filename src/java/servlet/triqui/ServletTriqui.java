@@ -11,13 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import objectlevel.Karina;
+import objectlevel.Carina;
 
 /**
  *
  * @author jalheart
  */
-public class ServletTriqui extends HttpServlet {    
+public class ServletTriqui extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,7 +30,7 @@ public class ServletTriqui extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            Karina karina=new Karina(request.getSession(true),out,request.getParameterMap());
+            Carina karina=new Carina(request.getSession(true),out,request.getParameterMap());
 //            Agent    agent  =new Agent(request.getParameterMap(),request.getSession(true),out);
 //            agent.run();
 //            out.print(WorkingMemory.getInstance().remember("moves_made"));

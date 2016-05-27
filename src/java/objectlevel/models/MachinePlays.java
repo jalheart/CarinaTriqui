@@ -6,6 +6,7 @@
 package objectlevel.models;
 
 import carina.memory.WorkingMemory;
+import carina.objectlevel.ModelOfTheWorld;
 import carina.objectlevel.ReasoningTask;
 
 /**
@@ -17,7 +18,7 @@ public class MachinePlays extends ReasoningTask{
     @Override
     public Object run() {
         this.workingMemory  =WorkingMemory.getInstance();
-        ModelOfTheWorld modelOfTheWorld =workingMemory.getModel_of_the_world();
+        TriquiModelOfTheWorld modelOfTheWorld =(TriquiModelOfTheWorld)workingMemory.getModel_of_the_world();
         //TODO Vamos a incluir metacognición
         RandomAlgorithmStrategy   strategy    =new RandomAlgorithmStrategy(modelOfTheWorld.getBoard().getCells());
         MiniMaxAlgorithmStrategy mmStrategy =new MiniMaxAlgorithmStrategy(modelOfTheWorld.getBoard().getCells(), modelOfTheWorld.currentToken());
@@ -26,6 +27,5 @@ public class MachinePlays extends ReasoningTask{
         modelOfTheWorld.getBoard().setData(position[0], position[1], modelOfTheWorld.currentToken());
         this.workingMemory.setModel_of_the_world(modelOfTheWorld);
         return null;
-    }
-    
+    }    
 }

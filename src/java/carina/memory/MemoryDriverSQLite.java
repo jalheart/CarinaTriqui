@@ -57,7 +57,6 @@ public class MemoryDriverSQLite extends MemoryDriver{
             while (rs.next()) {
                 salida  =rs.getObject("VALUE");                
             }
-            System.out.println("La salida es: "+((Input)salida).getName());
             s.close();
         } catch (SQLException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );            

@@ -10,6 +10,7 @@ import carina.memory.WorkingMemory;
 import carina.metacore.ComputationalStrategy;
 import carina.objectlevel.BasicCognitiveProcessingUnit;
 import carina.objectlevel.Category;
+import carina.objectlevel.ModelOfTheWorld;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class CategorizationAlgorithmStrategy extends ComputationalStrategy{
         //TODO cargar los patrones desde la bcpu
         if(java.util.regex.Pattern.matches("[0-2]_[0-2]", (String)this.getValue())){
             String[]    information =this.getValue().split("_");
-            String[][]  cells   =this.getModelOfTheWorld().getBoard().getCells();
+            String[][]  cells   =((TriquiModelOfTheWorld)this.getModelOfTheWorld()).getBoard().getCells();
             String cellData =cells[Integer.parseInt(information[0])][Integer.parseInt(information[1])];        
             if(cellData==null || "".equals(cellData)){
                 for (Category category : this.getCategories()) {

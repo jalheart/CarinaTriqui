@@ -9,6 +9,6 @@ package carina.metacore;
  *
  * @author jalheart
  */
-abstract public class Action extends FuntionalElement{
+abstract public class Action extends Task{
     
 }

@@ -14,10 +14,7 @@ public class Goal extends Element{
     private State targetState;
     
     public Goal() {
-        this.setCurrentState(new State("current_state", false));
-        this.setTargetState(new State("target_state", true));
     }
-    
     // <editor-fold defaultstate="collapsed" desc="GETs y SETs">
     /**
      * @return the currentState
@@ -25,7 +22,6 @@ public class Goal extends Element{
     public State getCurrentState() {
         return currentState;
     }
-
     /**
      * @param currentState the currentState to set
      */
