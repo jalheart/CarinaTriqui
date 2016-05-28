@@ -9,9 +9,11 @@ import carina.memory.BasicMemoryUnity;
 import carina.memory.LongTermMemory;
 import carina.memory.MemoryDriverMySQL;
 import carina.memory.PerceptualMemory;
+import carina.memory.SensorMemory;
 import carina.memory.WorkingMemory;
 import carina.metacore.Event;
 import carina.metacore.State;
+import carina.objectlevel.AgentSettings;
 import carina.objectlevel.BasicCognitiveProcessingUnit;
 import carina.objectlevel.Category;
 import carina.objectlevel.Pattern;
@@ -27,24 +29,31 @@ import objectlevel.controllers.Reasoner;
  *
  * @author jalheart
  */
-public class Carina {
+public class Carina {  
     public Carina(HttpSession sess,PrintWriter out,Map<String,String[]> inputs) {
-        Map<String,String> mysqlMemoriDriveConfig   =new HashMap<String, String>(){{
-                                                                                    put("server", "localhost");
-                                                                                    put("db", "karina");
-                                                                                    put("user", "root");
-                                                                                    put("pass", "");
-//                                                                                    put("table", "perception1");
-                                                                                }};
-        mysqlMemoriDriveConfig.put("table","perceptual_memory");
-        PerceptualMemory.init(new MemoryDriverMySQL(mysqlMemoriDriveConfig));
-        LongTermMemory.init(new MemoryDriverMySQL(new HashMap<String, String>(){{
-                                                                                put("server", "localhost");
-                                                                                put("db", "karina");
-                                                                                put("user", "root");
-                                                                                put("pass", "");
+        AgentSettings.db_settings   =new HashMap<String,String>(){{
+                                                put("server", "localhost");
+                                                put("db", "carina_triqui");
+                                                put("user", "carina_triqui");
+                                                put("pass", "WEJfqbWcwbEyteLw");
+                                            }};
+        
+        // <editor-fold defaultstate="collapsed" desc="Se inicializan los distintos tipos de memoria ">
+        PerceptualMemory.init(new MemoryDriverMySQL(new HashMap<String, String>(AgentSettings.db_settings){{                                                                                
+                                                                                put("table", "perceptual_memory");
+                                                                            }}));
+                
+        LongTermMemory.init(new MemoryDriverMySQL(new HashMap<String, String>(AgentSettings.db_settings){{                                                                                
                                                                                 put("table", "longterm_memory");
                                                                             }}));
+        
+        SensorMemory.init(new MemoryDriverMySQL(new HashMap<String, String>(AgentSettings.db_settings){{                                                                                
+                                                                                put("table", "sensors");
+                                                                            }}));
+        WorkingMemory.init(new MemoryDriverMySQL(new HashMap<String, String>(AgentSettings.db_settings){{                                                                                
+                                                                                put("table", "working_memory");
+                                                                            }}));
+        // </editor-fold>
         List<Category> initialCategories    =new ArrayList<>();
         initialCategories.add(new Category("playable"));
         initialCategories.add(new Category("reset"));
@@ -55,16 +64,6 @@ public class Carina {
         initialPatterns.add(new Pattern("reset"));
         LongTermMemory.getInstance().storeInformation(new BasicMemoryUnity("patterns",initialPatterns));
         
-//       BasicMemoryUnity bmu= LongTermMemory.getInstance().retrieveInformation("cat%");
-//       out.print(((List<Category>)bmu.information).get(0).getCategory());
-//        WorkingMemory.init(new MemoryDriverFile("working_memory"));
-        WorkingMemory.init(new MemoryDriverMySQL(new HashMap<String, String>(){{
-                                                                                put("server", "localhost");
-                                                                                put("db", "karina");
-                                                                                put("user", "root");
-                                                                                put("pass", "");
-                                                                                put("table", "working_memory");
-                                                                            }}));
         WorkingMemory wm    =WorkingMemory.getInstance();
         
         wm.setMental_state( new State("is_system_started", true));
@@ -74,27 +73,16 @@ public class Carina {
         wm.setMental_state( new State("is_planned", false));
         wm.setMental_state( new State("is_board_modified", false));
         wm.setMental_state( new State("is_player_winner_verified", false));
-        wm.setMental_state( new State("is_player_turn_changed", false));    
-        wm.setMental_state( new State("is_machine_played", false));    
-        wm.setMental_state( new State("is_machine_winner_verified", false));    
-        wm.setMental_state( new State("is_machine_turn_changed", false));    
+        wm.setMental_state( new State("is_player_turn_changed", false));
+        wm.setMental_state( new State("is_machine_played", false));
+        wm.setMental_state( new State("is_machine_winner_verified", false));
+        wm.setMental_state( new State("is_machine_turn_changed", false));
         wm.setMental_state( new State("is_world_shown", false));
         
         wm.setBcpu(new BasicCognitiveProcessingUnit());
         
         List<Event> eventos =new ArrayList<>();
         wm.storeInformation(new BasicMemoryUnity("events", eventos));
-       
-//        PerceptualMemory pmTmp  =new PerceptualMemory(new MemoryDriverMySQL(new HashMap<String, String>(){{
-//                                                                                                            put("server", "localhost");
-//                                                                                                            put("db", "karina");
-//                                                                                                            put("user", "root");
-//                                                                                                            put("pass", "");
-//                                                                                                            put("table", "perception1");
-//                                                                                                        }}));
-//        pmTmp.storeInformation(new BasicMemoryUnity("algo", new Input("Entrada", "esta")));
-//        BasicMemoryUnity mi= pmTmp.retrieveInformation("algo");
-//        System.out.println(((Input)mi.information).getInformation());
         
         Reasoner reasoner   =new Reasoner(inputs,out);
         if(reasoner.perception()){

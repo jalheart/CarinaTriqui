@@ -111,11 +111,9 @@ public class MemoryDriverMySQL extends MemoryDriver{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             _connection =DriverManager.getConnection("jdbc:mysql://"+confTmp.get("server")+"/"+confTmp.get("db"),confTmp.get("user"), confTmp.get("pass"));            
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error en bd");
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            e.printStackTrace();
-//            System.exit(0);
         } 
     }
     private void desconectar(){

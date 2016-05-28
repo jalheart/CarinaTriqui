@@ -31,9 +31,6 @@ public class ServletTriqui extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Carina karina=new Carina(request.getSession(true),out,request.getParameterMap());
-//            Agent    agent  =new Agent(request.getParameterMap(),request.getSession(true),out);
-//            agent.run();
-//            out.print(WorkingMemory.getInstance().remember("moves_made"));
         }
     }
 

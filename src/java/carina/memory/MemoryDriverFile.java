@@ -52,14 +52,15 @@ public class MemoryDriverFile extends MemoryDriver{
         this.saveFileData(data);
     }
     private void createFile(){
+        System.out.println("Aqui estoy yo");
         try {
             File f=new File(this.URL);
             if(!f.exists()){
-                f.getParentFile().mkdirs();
+                f.getParentFile().mkdirs();                
                 f.createNewFile();
             }            
         } catch (Exception e) {
-        }        
+        }
     }
     private void saveFileData(Map<String,BasicMemoryUnity> data){
         try {

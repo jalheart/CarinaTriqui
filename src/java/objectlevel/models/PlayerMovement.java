@@ -14,15 +14,13 @@ import carina.objectlevel.MouseSensor;
  *
  * @author jalheart
  */
-public class PlayerMovement extends MouseSensor{
-    private SensorMemory sensorMemory;
+public class PlayerMovement extends MouseSensor{    
     public PlayerMovement() {
-        this.sensorMemory   =new SensorMemory(new MemoryDriverFile("sensor_memory_player_move"));
     }
     public void setMovement(Object value){
-        this.sensorMemory.storeInformation(new BasicMemoryUnity(this.getType(), value));
+        this.getSensorMemory().storeInformation(new BasicMemoryUnity(this.getType(), value));
     }
     public Object getMovement(){
-        return this.sensorMemory.retrieveInformation(this.getType());
+        return this.getSensorMemory().retrieveInformation(this.getType());
     }
 }
