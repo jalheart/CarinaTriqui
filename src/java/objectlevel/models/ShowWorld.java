@@ -19,8 +19,7 @@ public class ShowWorld extends Action{
     }
     @Override
     public Object run(){
-        this.workingMemory  =WorkingMemory.getInstance();
-        //TODO ViewBoard::showBoard($this->getWorkingMemory()->getModelOfTheWorld()->getBoard()->getCells(), $this->getStyles());
+        this.workingMemory  =WorkingMemory.getInstance();        
         return true;
     }
 // <editor-fold defaultstate="collapsed" desc="GETs y SETs">

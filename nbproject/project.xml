@@ -7,12 +7,11 @@
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${file.reference.sqlite-jdbc-3.8.11.2.jar}</file>
+                    <file>${libs.MySQLDriver.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${libs.MySQLDriver.classpath}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
+                    <file>${file.reference.CarinaCore.jar-1}</file>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.CarinaCore.jar}</file>

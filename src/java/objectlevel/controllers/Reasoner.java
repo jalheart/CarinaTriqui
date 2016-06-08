@@ -77,7 +77,9 @@ public class Reasoner {
             put("type_sensor", "player_movement");
         }});
         
-        addEvent(new Event("Perception..."+((BasicMemoryUnity)WorkingMemory.getInstance().getBcpu().getInput().getInformation()).information));
+//        addEvent(new Event("Perception..."+((BasicMemoryUnity)WorkingMemory.getInstance().getBcpu().getInput().getInformation()).information));
+//TODO REACTIVAR
+//        addEvent(new Event("Perception..."+((BasicMemoryUnity)WorkingMemory.getInstance().getBcpu().getInput().getInformation()).information));
         
         return true;
     }

@@ -23,7 +23,8 @@ public class ModifyBoard extends ReasoningTask{
         this.workingMemory  =WorkingMemory.getInstance();
         TriquiModelOfTheWorld modelOfTheWorld   =   (TriquiModelOfTheWorld)this.workingMemory.getModel_of_the_world();
         String[][]  cells   =modelOfTheWorld.getBoard().getCells();
-        String positionTmp  =(String)((BasicMemoryUnity)this.workingMemory.getBcpu().getInput().getInformation()).information;
+//        String positionTmp  =(String)((BasicMemoryUnity)this.workingMemory.getBcpu().getInput().getInformation()).information;
+        String positionTmp  =(String)((BasicMemoryUnity)this.workingMemory.getBcpu().getInput("player_movement").getInformation()).information;
         String[] position   =positionTmp.split("_");        
         modelOfTheWorld.getBoard().setData(Integer.parseInt(position[0]), Integer.parseInt(position[1]), modelOfTheWorld.currentToken());
         modelOfTheWorld.updateModelOfTheWorld();

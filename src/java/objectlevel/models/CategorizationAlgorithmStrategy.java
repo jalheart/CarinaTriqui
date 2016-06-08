@@ -32,7 +32,7 @@ public class CategorizationAlgorithmStrategy extends ComputationalStrategy{
         List<Object> categoriesTmp  =new ArrayList<>();
         WorkingMemory workingMemory         =WorkingMemory.getInstance();
         BasicCognitiveProcessingUnit bcpu   =workingMemory.getBcpu();
-        BasicMemoryUnity memoryInformation =(BasicMemoryUnity)bcpu.getInput().getInformation();
+        BasicMemoryUnity memoryInformation =(BasicMemoryUnity)bcpu.getInput("player_movement").getInformation();
         this.setModelOfTheWorld(workingMemory.getModel_of_the_world());
         this.setValue((String)memoryInformation.information);
         //TODO cargar los patrones desde la bcpu

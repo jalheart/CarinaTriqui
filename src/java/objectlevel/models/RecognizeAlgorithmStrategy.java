@@ -26,17 +26,7 @@ public class RecognizeAlgorithmStrategy extends ComputationalStrategy{
      */
     @Override
     public Object run() {
-        //TODO Mover a Recognition.java
-        //Se cargan todos lo patrones en la memoria de largo plazo
-        BasicMemoryUnity    bmu =LongTermMemory.getInstance().retrieveInformation("patterns");
-        List<Pattern> patterns   =(List<Pattern>)bmu.information;
-        //Se verifica que el valor ingresado corresponda con algun patron
-        for (Pattern pattern : patterns) {
-            if(java.util.regex.Pattern.matches((String)pattern.getPattern(), (String)this.getValue()))
-                return true;
-        }
-        return false;
-        //TODO Aquí se debe escoger que tipo de reconocimiento se hce depeniento del tipo de sensor
+        return true;        
     }
 
     /**
