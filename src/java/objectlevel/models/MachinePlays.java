@@ -26,6 +26,7 @@ public class MachinePlays extends ReasoningTask{
         int[]   position    =(int[])mmStrategy.run();
         modelOfTheWorld.getBoard().setData(position[0], position[1], modelOfTheWorld.currentToken());
         this.workingMemory.setModel_of_the_world(modelOfTheWorld);
+        WorkingMemory.getInstance().updateMentalState("is_machine_played", Boolean.TRUE);
         return null;
     }    
 }

@@ -21,17 +21,17 @@ public class VerifyWinner extends ReasoningTask{
     public Object run() {
         this.workingMemory  =WorkingMemory.getInstance();
         TriquiModelOfTheWorld motw  =(TriquiModelOfTheWorld)workingMemory.getModel_of_the_world();
-        String stateName    =motw.currentToken().equals(motw.getPlayer_token())?"is_player_winner_verified":"is_machine_winner_verified";        
+        String stateName    =motw.currentToken().equals(motw.getPlayer_token())?"is_player_winner_verified":"is_machine_winner_verified";
         String[][]  columns =this.transposition(motw.getBoard().getCells());
         String[][]  temp    =this.diagonal(motw.getBoard().getCells());
         String[]    diagonal=temp[0];
         String[]    cross   =temp[1];
         int i,countToken;
+        workingMemory.updateMentalState(stateName,true);
         for (i = 0; i < 3; i++) {
             String[]    row = motw.getBoard().getCells()[i];
             countToken  =this.tell(row, motw.currentToken());
-            if(countToken==3){
-                workingMemory.updateMentalState(stateName,true);
+            if(countToken==3){                
                 updateTaskState(true, true, true);
                 return true;
             }
@@ -40,7 +40,6 @@ public class VerifyWinner extends ReasoningTask{
             String[] column =columns[i];
             countToken      =this.tell(column, motw.currentToken());
             if(countToken==3){
-                workingMemory.updateMentalState(stateName,true);
                 updateTaskState(true, true, true);
                 return true;
             }
@@ -48,11 +47,9 @@ public class VerifyWinner extends ReasoningTask{
         int count_d =this.tell(diagonal, motw.currentToken());
         int count_t =this.tell(cross, motw.currentToken());
         if(count_d==3 || count_t==3){
-            workingMemory.updateMentalState(stateName,true);
             updateTaskState(true, true, true);
             return true;
         }
-        workingMemory.updateMentalState(stateName,false);
         updateTaskState(true, true, false);
         return true;
     }    

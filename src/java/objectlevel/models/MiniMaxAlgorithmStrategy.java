@@ -178,17 +178,16 @@ public class MiniMaxAlgorithmStrategy extends ComputationalStrategy{
       int pattern = 0b000000000;  // 9-bit pattern for the 9 cells
       for (int row = 0; row < 3; ++row) {
          for (int col = 0; col < 3; ++col) {
-            if (cells[row][col] == thePlayer) {
+            if (thePlayer.equals(cells[row][col])) {
                pattern |= (1 << (row * 3 + col));
             }
          }
-      }
+      }      
       for (int winningPattern : winningPatterns) {
          if ((pattern & winningPattern) == winningPattern) return true;
-      }
+      }      
       return false;
    }
-
     @Override
     public Object run() {
         return this.getMove();

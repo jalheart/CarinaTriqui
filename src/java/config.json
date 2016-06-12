@@ -1,0 +1,37 @@
+{
+    "memory_management":{
+        "type":"mysql",
+        "config":{
+            "server":"localhost",
+            "db":"carina_triqui",
+            "user":"carina_triqui",
+            "pass":"WEJfqbWcwbEyteLw"
+        }
+    },
+    "initial_data":{
+        "long_term_memory":{
+            "patterns":["[0-2]_[0-2]","reset"],
+            "categories":["playable","reset"]
+        },
+        "mental_states":{
+            "persistents":{
+            },
+            "volatile":{
+                "is_system_started":true,
+                "is_perceived":false,
+                "is_recognized":false,
+                "is_categorized":false,
+                "is_planned":false,
+                "is_board_modified":false,
+                "is_player_winner_verified":false,
+                "is_player_turn_changed":false,
+                "is_player_played":false,
+                "is_machine_played":false,
+                "is_machine_winner_verified":false,
+                "is_machine_winner_verified":false,
+                "is_machine_turn_changed":false,
+                "is_world_shown":false
+            }
+        }
+    }
+}

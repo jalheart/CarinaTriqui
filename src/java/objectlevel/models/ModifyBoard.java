@@ -32,6 +32,8 @@ public class ModifyBoard extends ReasoningTask{
         this._executed  =true;
         this._successful=true;
         this._stopPlan  =false;
+        WorkingMemory.getInstance().updateMentalState("is_board_modified", Boolean.TRUE);
+        WorkingMemory.getInstance().updateMentalState("is_player_played", Boolean.TRUE);
         return true;
     }
 }

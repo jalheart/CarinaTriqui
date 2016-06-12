@@ -30,7 +30,8 @@ public class ServletTriqui extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            Carina karina=new Carina(request.getSession(true),out,request.getParameterMap());
+            String path   =getServletContext().getRealPath("WEB-INF/classes/config.json");
+            Carina karina=new Carina(request.getSession(true),out,request.getParameterMap(),path);
         }
     }
 

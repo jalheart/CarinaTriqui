@@ -20,6 +20,7 @@ public class ResetBoard extends ReasoningTask{
         modelOfTheorld.setBoard(new Board());
         modelOfTheorld.getBoard().create();
         workingMemory.setModel_of_the_world(modelOfTheorld);
+        WorkingMemory.getInstance().updateMentalState("is_board_modified", Boolean.TRUE);
         return null;
     }    
 }

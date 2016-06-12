@@ -9,6 +9,7 @@ import carina.memory.BasicMemoryUnity;
 import carina.memory.WorkingMemory;
 import carina.metacore.Event;
 import carina.metacore.Plan;
+import carina.metacore.State;
 import carina.objectlevel.Categorization;
 import carina.objectlevel.Perception;
 import carina.objectlevel.Planning;
@@ -70,7 +71,7 @@ public class Reasoner {
         }
         return false;
     }
-    public Boolean perception(){        
+    public Boolean perception(){
         if(!this.sensing()) return false;
         _perception.processInformation(new HashMap<String, Object>(){{
             put("information", _playerMovement.getMovement());
@@ -83,7 +84,7 @@ public class Reasoner {
         
         return true;
     }
-    public Boolean recognition(){
+    public Boolean recognition(){        
         Boolean recognized  =(Boolean)this._recognition.processInformation(RecognizeAlgorithmStrategy.class);
         _workingMemory.updateMentalState("is_recognized", recognized);
         addEvent(new Event("Recognition..."+recognized));
@@ -109,9 +110,12 @@ public class Reasoner {
         BasicMemoryUnity bmu    =WorkingMemory.getInstance().retrieveInformation("events");//Se obtiene el recuerdo
         List<Event> events =(List<Event>)bmu.information;//Se saca la lista de eventos
         
+        WorkingMemory.getInstance().updateMentalState("is_world_shown", Boolean.TRUE);
+        Map<String,State>   mentalStates    = WorkingMemory.getInstance().getMental_states();
+        
         TriquiModelOfTheWorld motw  =(TriquiModelOfTheWorld)WorkingMemory.getInstance().getModel_of_the_world();
         ViewBoard   vb  =new ViewBoard(this._out);
-        vb.showBoard(motw.getBoard().getCells(),events);
+        vb.showBoard(motw.getBoard().getCells(),events,mentalStates);
     }
     public void addEvent(Event event){
         BasicMemoryUnity bmu    =WorkingMemory.getInstance().retrieveInformation("events");//Se obtiene el recuerdo
